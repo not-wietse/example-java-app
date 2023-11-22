@@ -2,8 +2,8 @@
 
 ### Requirements
 
-Java 17
-Gradle 9
+- Java 17
+- Gradle 9
 
 ### Run the security check analisys
 
