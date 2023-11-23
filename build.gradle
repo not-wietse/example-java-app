@@ -31,5 +31,5 @@ tasks.named('test') {
 
 
 dependencyCheck {
-    format = 'JSON'
+    format = 'HTML'
 }
