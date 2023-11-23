@@ -1,0 +1,71 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: my-java-app
+  namespace: notwietse-dev
+  resourceVersion: '3431428683'
+  annotations:
+    openshift.io/host.generated: 'true'  
+spec:
+  host: my-java-app-notwietse-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+  to:
+    kind: Service
+    name: my-java-app
+    weight: 100
+  port:
+    targetPort: 8080
+  wildcardPolicy: None
+status:
+  ingress:
+    - host: my-java-app-notwietse-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+      routerName: default
+      conditions:
+        - type: Admitted
+          status: 'True'
+          lastTransitionTime: '2023-11-22T12:11:25Z'
+      wildcardPolicy: None
+      routerCanonicalHostname: router-default.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+
+---
+
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: el-java-app-eventlistener
+  namespace: notwietse-dev
+  labels:
+    app.kubernetes.io/managed-by: EventListener
+    app.kubernetes.io/part-of: Triggers
+    eventlistener: java-app-eventlistener
+  annotations:
+    openshift.io/host.generated: 'true'
+spec:
+  host: >-
+    el-java-app-eventlistener-notwietse-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+  to:
+    kind: Service
+    name: el-java-app-eventlistener
+    weight: 100
+  port:
+    targetPort: http-listener
+  wildcardPolicy: None
+
+---
+
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: report-webserver
+  namespace: notwietse-dev
+  annotations:
+    openshift.io/host.generated: 'true'
+  
+spec:
+  host: report-webserver-notwietse-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
+  to:
+    kind: Service
+    name: report-webserver
+    weight: 100
+  port:
+    targetPort: 8080
+  wildcardPolicy: None

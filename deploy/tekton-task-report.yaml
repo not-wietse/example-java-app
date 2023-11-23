@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  generation: 11
+  
+  name: report
+  namespace: notwietse-dev
+spec:
+  steps:
+    - computeResources: {}
+      image: 'quay.io/openshift/origin-cli:latest'
+      name: rename-tags
+      script: |
+        #!/bin/bash
+        cd $(workspaces.source-code.path)
+        cd java-app
+        ls -la
+        echo "************************************************************"
+        oc delete configmap dependency-security-report || true
+        oc create configmap dependency-security-report \
+        --from-file=index.html=build/reports/dependency-check-report.html 
+        ls -la
+  workspaces:
+    - name: source-code

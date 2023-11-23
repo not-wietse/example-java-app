@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  generation: 8
+  name: testing-java-app
+  namespace: notwietse-dev
+spec:
+  steps:
+    - computeResources: {}
+      image: 'registry.digitalocean.com/openshiftcourse/gradle:8-jdk17'
+      name: testing-java-app
+      script: |
+        #!/bin/bash
+        cd $(workspaces.source-code.path)
+        ls
+        cd java-app 
+        gradle init
+        gradle dependencyCheckAnalyze
+        gradle test
+        gradle build
+        echo "*************************************"
+        ls 
+  workspaces:
+    - name: source-code

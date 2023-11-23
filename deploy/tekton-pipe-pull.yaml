@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  generation: 3  
+  name: image-pull-pipe
+  namespace: notwietse-dev
+spec:
+  tasks:
+    - name: pull-image
+      taskRef:
+        kind: Task
+        name: example-java-app
+      workspaces:
+        - name: source-code
+          workspace: shared-workspace-pvc
+  workspaces:
+    - name: shared-workspace-pvc

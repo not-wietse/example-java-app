@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"tekton.dev/v1","kind":"Task","metadata":{"annotations":{},"name":"example-java-app","namespace":"notwietse-dev"},"spec":{"steps":[{"image":"alpine/git","name":"pull-repo","script":"#!/bin/bash\necho
+      \"Cloning repository...\"\ngit clone
+      https://github.com/musghost/example-java-app.git example-java-app\n"}]}}
+  generation: 8
+  name: example-java-app
+  namespace: notwietse-dev
+spec:
+  steps:
+    - computeResources: {}
+      image: quay.io/wire/alpine-git
+      name: pull-repo
+      script: |
+        #!/bin/bash 
+        cd $(workspaces.source-code.path)
+        echo "Cloning repository..." 
+        git clone https://github.com/musghost/example-java-app.git java-app
+        ls 
+  workspaces:
+    - name: source-code

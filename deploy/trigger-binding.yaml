@@ -1,0 +1,10 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  generation: 1
+  name: github-pr-trigger-binding-java-app
+  namespace: notwietse-dev
+spec:
+  params:
+    - name: gitrevision
+      value: $(body.pull_request.head.sha)

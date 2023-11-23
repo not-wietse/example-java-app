@@ -1,0 +1,18 @@
+resources:
+-  buildconfig.yaml              
+-  kustomization.yaml                 
+-  tekton-pipe-test-report-clean.yaml 
+-  tekton-task-test.yaml              
+-  webapp-deployment.yaml
+-  eventlistener.yaml                 
+-  route.yaml                         
+-  tekton-task-cleanup.yaml           
+-  tekton-tasks-pull.yaml
+-  imagestream.yaml                   
+-  service.yaml                       
+-  tekton-task-rename.yaml            
+-  trigger-binding.yaml
+-  java-deployment.yaml               
+-  tekton-pipe-pull.yaml              
+-  tekton-task-report.yaml            
+-  trigger-template.yaml

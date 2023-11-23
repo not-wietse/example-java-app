@@ -1,0 +1,28 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  generation: 2
+  name: github-trigger-template-java-app
+  namespace: notwietse-dev
+spec:
+  params:
+    - default: master
+      description: The git revision
+      name: gitrevision
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: test-pipeline-run-
+      spec:
+        params:
+          - name: repo-url
+            value: 'https://github.com/not-wietse/example-java-app'
+          - name: revision
+            value: main
+        pipelineRef:
+          name: new-pipeline
+        workspaces:
+          - name: shared-workspace
+            persistentVolumeClaim:
+              claimName: shared-workspace-pvc
