@@ -1,6 +1,5 @@
 resources:
 -  buildconfig.yaml              
--  kustomization.yaml                 
 -  tekton-pipe-test-report-clean.yaml 
 -  tekton-task-test.yaml              
 -  webapp-deployment.yaml
