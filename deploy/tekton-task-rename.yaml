@@ -1,0 +1,15 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  generation: 7
+  
+  name: rename-tags
+  namespace: notwietse-dev
+spec:
+  steps:
+    - computeResources: {}
+      image: 'quay.io/openshift/origin-cli:latest'
+      name: rename-tags
+      script: |
+        #!/bin/bash
+        oc tag my-java-app:latest my-java-app:prd

@@ -1,0 +1,34 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  generation: 8 
+  name: new-pipeline
+  namespace: notwietse-dev
+spec:
+  finally:
+    - name: cleanup-test
+      taskRef:
+        kind: Task
+        name: cleanup
+      workspaces:
+        - name: source-code
+          workspace: shared-workspace-pvc
+  tasks:
+    - name: testing-java-app
+      taskRef:
+        kind: Task
+        name: testing-java-app
+      workspaces:
+        - name: source-code
+          workspace: shared-workspace-pvc
+    - name: reporting
+      runAfter:
+        - testing-java-app
+      taskRef:
+        kind: Task
+        name: report
+      workspaces:
+        - name: source-code
+          workspace: shared-workspace-pvc
+  workspaces:
+    - name: shared-workspace-pvc

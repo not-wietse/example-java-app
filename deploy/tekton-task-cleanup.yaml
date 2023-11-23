@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  generation: 9
+  
+  name: cleanup
+  namespace: notwietse-dev
+spec:
+  steps:
+    - computeResources: {}
+      image: quay.io/wire/alpine-git
+      name: cleanup
+      script: |
+        #!/bin/bash
+        cd $(workspaces.source-code.path)
+        ls
+        rm -rf *
+        echo "after cleaning:\n"
+        ls 
+  workspaces:
+    - name: source-code

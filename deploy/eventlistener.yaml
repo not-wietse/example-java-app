@@ -1,0 +1,16 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: java-app-eventlistener
+  namespace: notwietse-dev
+spec:
+  namespaceSelector: {}
+  resources: {}
+  serviceAccountName: pipeline
+  triggers:
+    - bindings:
+        - kind: TriggerBinding
+          ref: github-pr-trigger-binding-java-app
+      name: java-app-trigger
+      template:
+        ref: github-trigger-template-java-app

@@ -1,0 +1,20 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: my-java-app
+  namespace: notwietse-dev
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - name: prd
+      annotations: null
+      from:
+        kind: ImageStreamImage
+        name: >-
+          my-java-app@sha256:42ffc55275a9a6544261c4c01bbd651f1cc77b9bd769d6c2d2f454281fb8039a
+      generation: 2
+      importPolicy:
+        importMode: Legacy
+      referencePolicy:
+        type: Source

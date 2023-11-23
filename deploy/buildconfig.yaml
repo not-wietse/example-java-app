@@ -1,0 +1,32 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: example-java-app
+  namespace: notwietse-dev
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"build.openshift.io/v1","kind":"BuildConfig","metadata":{"annotations":{},"name":"example-java-app","namespace":"notwietse-dev"},"spec":{"output":{"to":{"kind":"ImageStreamTag","name":"my-java-app:latest"}},"source":{"git":{"uri":"https://github.com/musghost/example-java-app.git"}},"strategy":{"dockerStrategy":{"dockerfilePath":"Dockerfile","pullSecret":{"name":"my-app"}}}}}
+
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'my-java-app:latest'
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Docker
+    dockerStrategy:
+      pullSecret:
+        name: my-app
+      dockerfilePath: Dockerfile
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/not-wietse/example-java-app.git'
+  runPolicy: Serial
+status:
+  lastVersion: 3

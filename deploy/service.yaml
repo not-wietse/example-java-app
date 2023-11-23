@@ -1,0 +1,87 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: el-java-app-eventlistener
+  namespace: notwietse-dev
+  labels:
+    app.kubernetes.io/managed-by: EventListener
+    app.kubernetes.io/part-of: Triggers
+    eventlistener: java-app-eventlistener
+  ownerReferences:
+    - apiVersion: triggers.tekton.dev/v1beta1
+      kind: EventListener
+      name: java-app-eventlistener
+      uid: c2703e4e-5a7a-4b5d-8a6f-1732fca66e29
+      controller: true
+      blockOwnerDeletion: true
+spec:
+  clusterIP: 172.30.201.186
+  ipFamilies:
+    - IPv4
+  ports:
+    - name: http-listener
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: http-metrics
+      protocol: TCP
+      port: 9000
+      targetPort: 9000
+  internalTrafficPolicy: Cluster
+  clusterIPs:
+    - 172.30.201.186
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app.kubernetes.io/managed-by: EventListener
+    app.kubernetes.io/part-of: Triggers
+    eventlistener: java-app-eventlistener
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: my-java-app
+  namespace: notwietse-dev
+spec:
+  clusterIP: 172.30.147.51
+  ipFamilies:
+    - IPv4
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  internalTrafficPolicy: Cluster
+  clusterIPs:
+    - 172.30.147.51
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: my-java-app
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: report-webserver
+  namespace: notwietse-dev  
+spec:
+  clusterIP: 172.30.96.49
+  ipFamilies:
+    - IPv4
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  internalTrafficPolicy: Cluster
+  clusterIPs:
+    - 172.30.96.49
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: report-webserver
